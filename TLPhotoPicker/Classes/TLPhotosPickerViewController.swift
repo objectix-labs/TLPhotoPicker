@@ -62,6 +62,7 @@ public struct TLPhotosPickerConfigure {
     public var allowedLivePhotos = true
     public var allowedVideo = true
     public var allowedAlbumCloudShared = false
+    public var allowedPhotoRecording = true
     public var allowedVideoRecording = true
     public var recordingVideoQuality: UIImagePickerController.QualityType = .typeMedium
     public var maxVideoDuration:TimeInterval? = nil
@@ -489,7 +490,14 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
         guard !maxCheck() else { return }
         let picker = UIImagePickerController()
         picker.sourceType = .camera
-        picker.mediaTypes = [kUTTypeImage as String]
+        
+        if self.configure.allowedPhotoRecording ||
+            (!self.configure.allowedPhotoRecording && !self.configure.allowedVideoRecording) {
+            picker.mediaTypes = [kUTTypeImage as String]
+        } else {
+            picker.mediaTypes = []
+        }
+        
         if self.configure.allowedVideoRecording {
             picker.mediaTypes.append(kUTTypeMovie as String)
             picker.videoQuality = self.configure.recordingVideoQuality
