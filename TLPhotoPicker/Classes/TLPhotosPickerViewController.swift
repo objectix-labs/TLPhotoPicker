@@ -494,8 +494,6 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
         if self.configure.allowedPhotoRecording ||
             (!self.configure.allowedPhotoRecording && !self.configure.allowedVideoRecording) {
             picker.mediaTypes = [kUTTypeImage as String]
-        } else {
-            picker.mediaTypes = []
         }
         
         if self.configure.allowedVideoRecording {
